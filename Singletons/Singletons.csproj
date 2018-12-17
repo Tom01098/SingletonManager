@@ -2,6 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>SingletonManager</PackageId>
+    <Authors>Tom01098</Authors>
+    <Product>SingletonManager</Product>
+    <Description>A simple Singleton implementation, using a manager to keep track of Singleton objects, and an optional base helper class for easy use.</Description>
   </PropertyGroup>
 
 </Project>

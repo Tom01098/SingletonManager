@@ -99,6 +99,17 @@ namespace UnitTests
             Assert.AreEqual(true, doesExist);
         }
 
+        [TestMethod]
+        public void SingletonClassTest()
+        {
+            SingletonManager.Clear();
+
+            var obj = new InheritedSingleton();
+            var sing = SingletonManager.Get<InheritedSingleton>();
+
+            Assert.AreEqual(obj, sing);
+        }
+
         public class Player
         {
             public string Name { get; }
@@ -109,6 +120,11 @@ namespace UnitTests
                 Name = name;
                 Age = age;
             }
+        }
+
+        public class InheritedSingleton : Singleton<InheritedSingleton>
+        {
+
         }
     }
 }

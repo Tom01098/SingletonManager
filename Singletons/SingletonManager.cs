@@ -26,12 +26,15 @@ namespace Singletons
         {
             var type = typeof(T);
 
-            if (singletons.ContainsKey(type))
+            lock (singletons)
             {
-                throw new InvalidOperationException(type.FullName + " has already been registered, do you mean to use " + nameof(RegisterOrReplace) + "?");
-            }
+                if (singletons.ContainsKey(type))
+                {
+                    throw new InvalidOperationException(type.FullName + " has already been registered, do you mean to use " + nameof(RegisterOrReplace) + "?");
+                }
 
-            singletons.Add(type, obj);
+                singletons.Add(type, obj);
+            }
 
             return obj;
         }
@@ -46,13 +49,16 @@ namespace Singletons
         {
             var type = typeof(T);
 
-            if (singletons.ContainsKey(type))
+            lock (singletons)
             {
-                singletons[type] = obj;
-            }
-            else
-            {
-                singletons.Add(type, obj);
+                if (singletons.ContainsKey(type))
+                {
+                    singletons[type] = obj;
+                }
+                else
+                {
+                    singletons.Add(type, obj);
+                }
             }
 
             return obj;
@@ -79,12 +85,15 @@ namespace Singletons
         {
             var type = typeof(T);
 
-            if (!singletons.ContainsKey(type))
+            lock (singletons)
             {
-                throw new InvalidOperationException(type.FullName + " has not been registed, do you mean to use " + nameof(TryGet) + "?");
-            }
+                if (!singletons.ContainsKey(type))
+                {
+                    throw new InvalidOperationException(type.FullName + " has not been registed, do you mean to use " + nameof(TryGet) + "?");
+                }
 
-            return (T)singletons[type];
+                return (T)singletons[type]; 
+            }
         }
 
         /// <summary>
@@ -95,7 +104,13 @@ namespace Singletons
         /// <returns>True if the singleton exists</returns>
         public static bool TryGet<T>(out T obj)
         {
-            bool success = singletons.TryGetValue(typeof(T), out var result);
+            bool success;
+            object result;
+
+            lock (singletons)
+            {
+                success = singletons.TryGetValue(typeof(T), out result);
+            }
 
             obj = (T)result;
             return success;
@@ -108,7 +123,10 @@ namespace Singletons
         /// </summary>
         public static void Clear()
         {
-            singletons.Clear();
+            lock (singletons)
+            {
+                singletons.Clear();
+            }
         }
 
         /// <summary>
@@ -119,12 +137,15 @@ namespace Singletons
         {
             var type = typeof(T);
 
-            if (!singletons.ContainsKey(type))
+            lock (singletons)
             {
-                throw new InvalidOperationException(type.FullName + " has not been registed, do you mean to use " + nameof(TryUnregister) + "?");
-            }
+                if (!singletons.ContainsKey(type))
+                {
+                    throw new InvalidOperationException(type.FullName + " has not been registed, do you mean to use " + nameof(TryUnregister) + "?");
+                }
 
-            singletons.Remove(type);
+                singletons.Remove(type);
+            }
         }
 
         /// <summary>
@@ -135,9 +156,12 @@ namespace Singletons
         {
             var type = typeof(T);
 
-            if (singletons.ContainsKey(type))
+            lock (singletons)
             {
-                singletons.Remove(type);
+                if (singletons.ContainsKey(type))
+                {
+                    singletons.Remove(type);
+                }
             }
         }
 
@@ -148,7 +172,10 @@ namespace Singletons
         /// <returns>True if it has been registered</returns>
         public static bool HasBeenRegistered<T>()
         {
-            return singletons.ContainsKey(typeof(T));
+            lock (singletons)
+            {
+                return singletons.ContainsKey(typeof(T));
+            }
         }
         #endregion
     }

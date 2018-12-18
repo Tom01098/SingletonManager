@@ -10,7 +10,7 @@ Static manager class for dealing with singletons.
 | Method                  | Parameters | Returns | Usage                                                                                |
 |-------------------------|------------|---------|--------------------------------------------------------------------------------------|
 | `Register<T>`           | `T`        | `T`     | Register the given object as a singleton of its type                                 |
-| `RegisterOrReplace<T>`  | `T`        |         | Register the given object as a singleton of its type, replacing it if already exists |
+| `RegisterOrReplace<T>`  | `T`        | `T`     | Register the given object as a singleton of its type, replacing it if already exists |
 | `CreateAndRegister<T>`  |            |         | Create a new instance of the given type and register it as a singleton               |
 | `Get<T>`                |            | `T`     | Return the object that is the singleton of the current type                          |
 | `TryGet<T>`             | `out T`    | `bool`  | Set the `out` parameter as the singleton, return `true` if it exists                 |

@@ -110,6 +110,21 @@ namespace UnitTests
             Assert.AreEqual(obj, sing);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void SingletonWrongTypeException()
+        {
+            new IncorrectSingleton();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void SingletonAlreadyRegisteredException()
+        {
+            new InheritedSingleton();
+            new InheritedSingleton();
+        }
+
         public class Player
         {
             public string Name { get; }
@@ -123,6 +138,11 @@ namespace UnitTests
         }
 
         public class InheritedSingleton : Singleton<InheritedSingleton>
+        {
+
+        }
+
+        public class IncorrectSingleton : Singleton<string>
         {
 
         }

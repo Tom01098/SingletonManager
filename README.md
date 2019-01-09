@@ -1,6 +1,8 @@
 # SingletonManager
-An easy-to-use implementation of the [Singleton pattern](https://en.wikipedia.org/wiki/Singleton_pattern). Available for download as a [NuGet package](https://www.nuget.org/packages/SingletonManager).
 
+[![NuGet Badge](https://buildstats.info/nuget/singletonmanager)](https://www.nuget.org/packages/singletonmanager/)
+
+An easy-to-use implementation of the [Singleton pattern](https://en.wikipedia.org/wiki/Singleton_pattern).
 ## Documentation
 There are two classes contained in the package, which are both available in the `Singletons` namespace.
 
